@@ -1,0 +1,16 @@
+#!name=Bilibili 去广告
+#!desc=Bilibili 视频贴片、启动广告、信息流广告过滤
+#!category=广告拦截
+#!icon=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Bilibili.png
+
+[URL Rewrite]
+^https?://api\.bilibili\.com/x/v2/dm/ad - reject
+^https?://api\.bilibili\.com/x/report/heartbeat/mobile - reject-dict
+^https?://api\.bilibili\.com/x/report/click/ios - reject-dict
+^https?://api\.bilibili\.com/pgc/season/app/related/recommend - reject
+^https?://manga\.bilibili\.com/twirp/comic\.v\d\.Comic/Flash - reject
+^https?://api\.vc\.bilibili\.com/search_svr/v\d/Search/recommend_words - reject
+
+[MITM]
+enable = true
+hostname = %APPEND% api.bilibili.com, app.bilibili.com

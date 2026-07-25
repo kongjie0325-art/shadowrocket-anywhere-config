@@ -1,0 +1,15 @@
+#!name=Spotify 去广告
+#!desc=Spotify 广告拦截（仅对 Premium 用户有效，免费版无效）
+#!category=音乐
+#!icon=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Spotify.png
+
+[Header Rewrite]
+^https://spclient\.wg\.spotify\.com/ - header-del if-none-match
+^https://spclient\.wg\.spotify\.com/(user-customization-service|ad-logic) - header-del
+
+[Script]
+spotify-ad-block = type=http-response,pattern=^https://spclient\.wg\.spotify\.com/ad-logic,script-path=
+
+[MITM]
+enable = true
+hostname = %APPEND% spclient.wg.spotify.com, *.spotify.com

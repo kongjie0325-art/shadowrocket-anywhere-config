@@ -1,0 +1,16 @@
+#!name=Apple 服务增强
+#!desc=Apple 服务优化、iCloud 加速、App Store 优化
+#!category=系统
+#!icon=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple.png
+
+[Rule]
+DOMAIN-SUFFIX,apple.com,DIRECT
+DOMAIN-SUFFIX,icloud.com,DIRECT
+DOMAIN-SUFFIX,cdn-apple.com,DIRECT
+DOMAIN-SUFFIX,apple-dns.net,DIRECT
+DOMAIN-SUFFIX,mzstatic.com,DIRECT
+DOMAIN-SUFFIX,itunes.com,DIRECT
+
+[MITM]
+enable = true
+hostname = %APPEND% captive.apple.com, *.ls.apple.com

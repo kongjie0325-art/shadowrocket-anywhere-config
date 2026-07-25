@@ -1,0 +1,18 @@
+#!name=DNS 优化
+#!desc=DNS 分流：国内直连 DNS + 国外 DoH/DoT
+#!category=DNS
+#!icon=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/DNS.png
+
+[General]
+# 国内 DNS
+dns-server = https://dns.alidns.com/dns-query, https://doh.pub/dns-query
+# 国外 DNS (DoH/DoT/DoQ)
+fallback-dns-server = https://1.1.1.1/dns-query, https://dns.google/dns-query, quic://dns.adguard-dns.com
+
+[Host]
+# 强制直连的域名
+*.cn = server:https://dns.alidns.com/dns-query
+*.com.cn = server:https://dns.alidns.com/dns-query
+
+[MITM]
+enable = false

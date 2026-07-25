@@ -1,0 +1,18 @@
+#!name=网络检测
+#!desc=自动 IP 检测、DNS 测试、延迟测试、自动切换
+#!category=网络
+#!icon=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/SpeedTest.png
+
+[Rule]
+# 测速相关域名
+DOMAIN-SUFFIX,speedtest.net,DIRECT
+DOMAIN-SUFFIX,fast.com,DIRECT
+DOMAIN-SUFFIX,speed.cloudflare.com,DIRECT
+
+[Script]
+# IP 检测
+ip-check = type=http-request,pattern=^https://api\.ipify\.org,script-path=
+# DNS 检测
+dns-check = type=http-request,pattern=^https://1\.1\.1\.1/dns-query,script-path=
+# 延迟测试
+latency-test = type=cron,cronexp="0 */5 * * * *",script-path=
