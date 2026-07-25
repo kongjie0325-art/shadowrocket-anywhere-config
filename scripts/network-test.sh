@@ -1,29 +1,30 @@
 #!/bin/bash
-#!name=网络检测与自动测速
-#!desc=自动IP检测、DNS测试、延迟测试、自动切换最优节点
+#!name=Auto Network Speed Test
+#!desc=自动测速脚本 - 每10分钟测试一次
 #!system=true
-
-# 网络检测脚本
-# 每 5 分钟自动检测一次网络状态
+#!ignore-network-change=true
 
 LOG="/tmp/network-test.log"
-echo "[$(date)] 网络检测启动" >> $LOG
 
 # IP 检测
-echo "[$(date)] 检测出口 IP..." >> $LOG
-curl -s --max-time 5 https://api.ipify.org >> $LOG 2>&1
-echo "" >> $LOG
+IP=$(curl -s --max-time 5 https://api.ipify.org 2>/dev/null)
+echo "[$(date '+%Y-%m-%d %H:%M:%S')] IP: ${IP:-未知}" >> $LOG
 
-# DNS 检测
-echo "[$(date)] 检测 DNS 解析..." >> $LOG
-nslookup www.google.com 223.5.5.5 >> $LOG 2>&1
-echo "" >> $LOG
-
-# 延迟测试（示例）
-echo "[$(date)] 检测节点延迟..." >> $LOG
-for node in 节点-代理 节点-AI 节点-流媒体; do
-  echo "测试 $node..." >> $LOG
+# DNS 解析测试
+DOMAINS=("www.google.com" "www.baidu.com" "www.github.com")
+for domain in "${DOMAINS[@]}"; do
+    START=$(date +%s%N)
+    STATUS=$(curl -s -o /dev/null -w "%{http_code}" --max-time 3 "https://${domain}" 2>/dev/null)
+    END=$(date +%s%N)
+    ELAPSED=$(( (END - START) / 1000000 ))
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] DNS(${domain}): ${ELAPSED}ms (HTTP ${STATUS:-timeout})" >> $LOG
 done
 
-echo "[$(date)] 检测完成" >> $LOG
-exit 0
+# 延迟测试（generate_204）
+START=$(date +%s%N)
+STATUS=$(curl -s -o /dev/null -w "%{http_code}" --max-time 5 http://www.gstatic.com/generate_204 2>/dev/null)
+END=$(date +%s%N)
+ELAPSED=$(( (END - START) / 1000000 ))
+echo "[$(date '+%Y-%m-%d %H:%M:%S')] Latency: ${ELAPSED}ms (HTTP ${STATUS:-timeout})" >> $LOG
+
+echo "---" >> $LOG

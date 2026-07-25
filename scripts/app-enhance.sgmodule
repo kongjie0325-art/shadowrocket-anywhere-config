@@ -6,5 +6,5 @@
 # UA 伪装
 ua-spoof = type=http-request,pattern=^https?://,script-path=https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/scripts/app-enhance.js
 
-# 移除追踪参数
+# 追踪参数移除
 tracker-strip = type=http-request,pattern=^https?://,script-path=https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/scripts/tracker-strip.js

@@ -40,17 +40,16 @@ https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/m
 
 ## 三、启用广告规则（去广告）
 
-广告拦截已拆分为**独立模块**，可通过以下两种方式启用：
+广告拦截已拆分为**独立模块**和**远程规则集**。
 
 ### 方式 A：通过订阅自动同步（推荐）
 
-配置中已包含：
+配置中已包含远程广告规则集，Shadowrocket 会定期自动拉取：
 
 ```ini
-RULE-SET,https://raw.githubusercontent.com/fengzhiguyin/adblock-scripts/main/rules/ads_merged.txt,拦截
+RULE-SET,https://raw.githubusercontent.com/Loyalsoldier/surge-rules/master/ruleset/reject.txt,拦截
+RULE-SET,https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/main/Filters/AWAvenue-Ads-Rule-Surge.list,拦截
 ```
-
-Shadowrocket 会定期自动拉取远程广告规则，无需手动操作。
 
 ### 方式 B：本地启用/禁用
 
@@ -94,7 +93,37 @@ ca-passphrase = 88YHhW0Z
 
 ---
 
-## 五、验证配置
+## 五、模块导入（可选增强）
+
+Shadowrocket 底部「模块」→ 右上角 `+` → 粘贴链接导入：
+
+| 模块 | 用途 | 导入链接 |
+|---|---|---|
+| 🛡️ 通用广告拦截 | 综合广告过滤 | https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/modules/ad-block.sgmodule |
+| 📺 YouTube 去广告 | YouTube 广告过滤 | https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/modules/youtubeads.sgmodule |
+| 📹 Bilibili 去广告 | Bilibili 广告过滤 | https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/modules/bilibili-ad.sgmodule |
+| 🎵 Spotify 去广告 | Spotify 广告过滤 | https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/modules/spotify-ads.sgmodule |
+| 🍎 Apple 增强 | Apple 服务优化 | https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/modules/apple-enhance.sgmodule |
+| 🔒 隐私保护 | 追踪器/分析拦截 | https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/modules/privacy.sgmodule |
+| 🌐 DNS 优化 | DNS 分流优化 | https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/modules/dns.sgmodule |
+| ⚡ 网络检测 | IP/DNS/延迟测试 | https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/modules/network-test.sgmodule |
+
+---
+
+## 六、脚本导入（可选自动化）
+
+Shadowrocket 底部「脚本」→ 右上角 `+` → 粘贴链接导入：
+
+| 脚本 | 用途 | 导入链接 |
+|---|---|---|
+| 🔍 网络检测脚本 | IP/DNS/延迟检测 | https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/scripts/network-check.sgmodule |
+| 📱 App 增强脚本 | UA 伪装/追踪防护 | https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/scripts/app-enhance.sgmodule |
+| ⏰ 自动任务脚本 | 自动测速/GeoIP更新 | https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/scripts/auto.sgmodule |
+| 🌍 TikTok 区域解锁 | TikTok 区域解锁 | https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/scripts/tiktok-region-unlock.srs |
+
+---
+
+## 七、验证配置
 
 导入后，可逐项验证：
 
@@ -106,10 +135,11 @@ ca-passphrase = 88YHhW0Z
 | TikTok | 能否刷到美区内容（美国热门） |
 | AI 服务 | ChatGPT / Claude / Gemini 能否访问 |
 | 广告拦截 | 浏览网页是否减少广告显示 |
+| 模块生效 | 模块页面显示已启用 |
 
 ---
 
-## 六、更新配置
+## 八、更新配置
 
 ### 更新主配置
 
@@ -121,13 +151,13 @@ ca-passphrase = 88YHhW0Z
 
 广告规则通过远程 RULE-SET 自动更新，无需重新导入主配置。
 
-### 更新 TikTok 脚本
+### 更新模块与脚本
 
-修改 `scripts/tiktok-region-unlock.srs` 后，需重新导入主配置。
+模块和脚本通过远程 URL 自动更新，无需重新导入主配置。
 
 ---
 
-## 七、模块化说明
+## 九、模块化说明
 
 完整配置拆分为独立文件，方便维护：
 
@@ -138,23 +168,47 @@ ca-passphrase = 88YHhW0Z
 │   ├── proxy-group.ini      # [Proxy Group]
 │   └── mitm.ini             # [MITM]
 ├── rules/                   # 规则模块
-│   ├── p0-base.ini          # 基础路由
-│   ├── p1-tools.ini         # DNS/测速
-│   ├── p2-ai.ini            # AI 服务
-│   ├── p3-streaming.ini     # 视频/游戏
-│   ├── p4-social.ini        # 社交
-│   ├── p5-developer.ini    # 开发者
-│   ├── p6-corporate.ini    # 大厂
-│   ├── p7-finance.ini      # 金融
-│   ├── p8-fallback.ini     # 兜底
-│   └── adblock.ini          # 广告拦截（可独立修改）
+│   ├── adblock.ini          # 广告拦截（Loyalsoldier + AWAvenue + 本地规则）
+│   ├── ai.ini               # AI 服务分流
+│   ├── apple.ini            # Apple 服务
+│   ├── china.ini            # 国内直连
+│   ├── developer.ini        # 开发者工具
+│   ├── finance.ini          # 金融/下载/上传
+│   ├── foreign.ini          # 国外代理
+│   ├── github.ini           # GitHub
+│   ├── google.ini           # Google
+│   ├── microsoft.ini        # Microsoft
+│   ├── social.ini           # 社交（Meta/TikTok/Telegram/X）
+│   ├── streaming.ini        # 流媒体
+│   └── final.ini            # 兜底规则
+├── modules/                 # Shadowrocket 模块
+│   ├── ad-block.sgmodule    # 通用广告拦截
+│   ├── youtubeads.sgmodule  # YouTube 去广告
+│   ├── bilibili-ad.sgmodule # Bilibili 去广告
+│   ├── spotify-ads.sgmodule # Spotify 去广告
+│   ├── apple-enhance.sgmodule # Apple 增强
+│   ├── privacy.sgmodule     # 隐私保护
+│   ├── dns.sgmodule         # DNS 优化
+│   └── network-test.sgmodule # 网络检测
+└── scripts/                 # 脚本
+    ├── network-check.sgmodule # 网络检测模块
+    ├── ip-check.js          # IP 检测脚本
+    ├── dns-check.js         # DNS 检测脚本
+    ├── latency-check.js     # 延迟检测脚本
+    ├── app-enhance.sgmodule # App 增强模块
+    ├── app-enhance.js       # UA 伪装脚本
+    ├── tracker-strip.js     # 追踪参数移除
+    ├── auto.sgmodule        # 自动任务模块
+    ├── auto-speed.js        # 自动测速脚本
+    ├── auto-geoip.js        # GeoIP 自动更新
+    └── tiktok-region-unlock.srs # TikTok 区域解锁
 ```
 
 **模块化对 Shadowrocket 用户的影响**：零。Shadowrocket 只认 `full-config.ini`，模块文件用于源码版本控制。
 
 ---
 
-## 八、常见问题
+## 十、常见问题
 
 ### Q1: 导入后节点名都空白
 
@@ -170,7 +224,7 @@ ca-passphrase = 88YHhW0Z
 ### Q3: 广告拦截未生效
 
 **A**：
-1. 确认 `p0-base.ini` 中 `RULE-SET` 未被注释掉
+1. 确认 `adblock.ini` 中 `RULE-SET` 未被注释掉
 2. 远程规则需自动更新，检查 Shadowrocket 的订阅更新日志
 3. 手动测试：访问已知广告站是否被封
 
@@ -184,9 +238,14 @@ ca-passphrase = 88YHhW0Z
 
 ---
 
-## 九、相关链接
+## 十一、相关链接
 
-- [主配置文件 (full-config.ini)](https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/full-config.ini)
-- [GitHub 仓库](https://github.com/kongjie0325-art/shadowrocket-anywhere-config)
-- [来源站 (Anywhere-Hub)](https://anywhere-hub.chikacya.indevs.in)
-- [去广告规则源](https://github.com/fengzhiguyin/adblock-scripts)
+| 资源 | 链接 |
+|---|---|
+| ⭐ 主配置导入 | https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/full-config.ini |
+| 📂 GitHub 仓库 | https://github.com/kongjie0325-art/shadowrocket-anywhere-config |
+| 🌐 Anywhere-Hub 原始配置 | https://anywhere-hub.chikacya.indevs.in |
+| 📖 广告规则来源 | https://github.com/chikacya/anywhere-rules |
+| 🚫 Loyalsoldier Reject 规则 | https://github.com/Loyalsoldier/surge-rules |
+| 🛡️ AWAvenue 广告规则 | https://github.com/TG-Twilight/AWAvenue-Ads-Rule |
+| 📱 去广告脚本来源 | https://github.com/fengzhiguyin/adblock-scripts |

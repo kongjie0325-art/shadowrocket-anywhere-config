@@ -6,7 +6,8 @@ $httpClient.get("http://www.gstatic.com/generate_204", (error, response, data) =
         $notification.post("延迟测试", "连接失败", error);
     } else {
         const latency = response ? response.latency : "未知";
-        $notification.post("节点延迟", `延迟: ${latency || "N/A"}`, "");
+        const status = response ? response.status : "N/A";
+        $notification.post("节点延迟", `延迟: ${latency || "N/A"}`, `状态: ${status}`);
     }
     $done();
 });

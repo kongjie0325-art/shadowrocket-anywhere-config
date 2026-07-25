@@ -7,18 +7,23 @@ const headers = $request.headers;
 // 移除 User-Agent 中的标识
 if (headers["User-Agent"]) {
     headers["User-Agent"] = headers["User-Agent"]
-        .replace(/\/Shadowrocket\/\d+\.\d+\.\d+/, "")
-        .replace(/Shadowrocket/i, "");
+        .replace(/Shadowrocket/g, "")
+        .replace(/Surge/g, "")
+        .replace(/Quantumult/g, "")
+        .replace(/Clash/g, "")
+        .trim();
+
+    if (headers["User-Agent"].length < 10) {
+        headers["User-Agent"] = "Mozilla/5.0 (iPhone; CPU iPhone OS 16_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148";
+    }
 }
 
-// 移除 Referer（某些 App 追踪来源）
-if (headers["Referer"]) {
-    delete headers["Referer"];
+// 隐藏 iOS 设备型号
+if (headers["X-Device-Model"]) {
+    delete headers["X-Device-Model"];
+}
+if (headers["X-Device-Name"]) {
+    delete headers["X-Device-Name"];
 }
 
-// 移除 Cookie（如果不需要）
-// if (headers["Cookie"]) {
-//     delete headers["Cookie"];
-// }
-
-$done({ headers: headers });
+$done({response: {headers: headers}});

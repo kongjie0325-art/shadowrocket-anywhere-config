@@ -13,29 +13,32 @@ let completed = 0;
 
 domains.forEach(domain => {
     const start = Date.now();
-    $httpClient.get(`https://1.1.1.1/dns-query?name=${domain}&type=A`, {
-        headers: {
-            "Accept": "application/dns-json"
-        }
-    }, (error, response, data) => {
-        const elapsed = Date.now() - start;
-        const status = error ? "失败" : `${elapsed}ms`;
-        results.push(`${domain}: ${status}`);
+    $httpClient.get(`https://${domain}`, (error, response, data) => {
+        const latency = Date.now() - start;
+        results.push({
+            domain: domain,
+            latency: latency,
+            error: error ? error.message : null,
+            status: response ? response.status : null
+        });
         completed++;
-        
+
         if (completed === domains.length) {
-            $notification.post(
-                "DNS 解析测试",
-                results.join("\n"),
-                `完成 ${domains.length} 个域名测试`
-            );
-            $done();
+            let msg = "";
+            results.forEach(r => {
+                const status = r.error ? "❌" : `✅ ${r.latency}ms`;
+                msg += `${r.domain}: ${status}\n`;
+            });
+
+            // 找出最快和最慢
+            const ok = results.filter(r => !r.error).sort((a, b) => a.latency - b.latency);
+            if (ok.length > 0) {
+                msg += `\n最快: ${ok[0].domain} (${ok[0].latency}ms)`;
+                if (ok.length > 1) msg += `\n最慢: ${ok[ok.length-1].domain} (${ok[ok.length-1].latency}ms)`;
+            }
+
+            $notification.post("DNS 检测结果", msg, "");
         }
+        $done();
     });
 });
-
-// 超时处理
-setTimeout(() => {
-    $notification.post("DNS 测试", results.join("\n") || "超时", "");
-    $done();
-}, 10000);
