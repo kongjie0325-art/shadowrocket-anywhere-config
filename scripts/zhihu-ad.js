@@ -1,69 +1,91 @@
 // zhihu-ad.js
 // 知乎去广告脚本 - 开屏广告 + API 清理
+// 修正：使用真实知乎广告 API 路径
+// ES5 兼容 Shadowrocket QuanX
 
-const url = $request.url;
-
-// 知乎开屏广告 - 直接返回 204 阻止广告展示
-if (url) {
-    // 匹配知乎开屏广告常见 URL 模式
-    if (url.includes("splash") || 
-        url.includes("start-screen") ||
-        url.includes("open-screen") ||
-        url.includes("launch-ad") ||
-        url.match(/\/ads?\/splash|\/ad\/|\/promo\//)) {
+(function() {
+    'use strict';
+    
+    var url = $request.url;
+    var method = $request.method;
+    
+    // 仅处理响应
+    if (method && method !== 'response') {
+        $done({url: url});
+        return;
+    }
+    
+    // ========== 知乎开屏广告 ==========
+    // 真实 API: /api/v4/splash/v3/{id}/content
+    if (url && /\/api\/v4\/splash\//.test(url)) {
         $done({response: {status: 204}});
         return;
     }
-}
-
-// 移除广告追踪参数
-if (url) {
-    const adParams = ['ad', 'ads', 'adid', 'advertising', 'buvid', 'spm_id', 'from_spmid'];
-    let newUrl = url;
-    let modified = false;
     
-    adParams.forEach(param => {
-        const regex = new RegExp(`[?&]${param}=[^&]*`, 'gi');
-        if (regex.test(newUrl)) {
-            newUrl = newUrl.replace(regex, '').replace(/[?&]$/, '');
-            modified = true;
-        }
-    });
-    
-    if (modified) {
-        $request.url = newUrl;
+    var body = $response.body;
+    if (!body || typeof body !== 'string') {
+        $done({response: $response});
+        return;
     }
-}
-
-// 移除 JSON 中的广告内容
-if ($response.body && typeof $response.body === 'string') {
+    
+    var data;
     try {
-        let data = JSON.parse($response.body);
-        
-        // 移除推广内容
-        if (data.data && Array.isArray(data.data)) {
-            data.data = data.data.filter(item => {
-                return !item.type || 
-                       item.type !== 'ad' && 
-                       item.type !== 'promotion' &&
-                       item.type !== 'advert';
-            });
-        }
-        
-        // 移除推广 banner
-        if (data.result && data.result.banner) {
-            delete data.result.banner;
-        }
-        
-        // 移除推广卡片
-        if (data.data && data.data.promote) {
-            delete data.data.promote;
-        }
-        
-        $response.body = JSON.stringify(data);
+        data = JSON.parse(body);
     } catch (e) {
-        // 忽略解析错误
+        $done({response: $response});
+        return;
     }
-}
-
-$done({response: $response});
+    
+    var changed = false;
+    
+    // ========== 首页 Feed 流广告清理 ==========
+    // /v4/feed/top/activity (顶部活动banner)
+    if (url.indexOf('/v4/feed/top/activity') >= 0 || 
+        url.indexOf('/v4/feed/topstory') >= 0) {
+        // 移除顶部推广卡片（包含广告标签）
+        if (data.data && Array.isArray(data.data)) {
+            data.data = data.data.filter(function(item) {
+                if (!item || !item.data) return false;
+                // 过滤广告/推广标记
+                if (item.data.ad_label || item.data.ad_info || item.data.is_ad) return false;
+                // 过滤商业推广类型
+                if (item.data.type === 'Commercial_promotion' || item.data.type === 'Mass_message') return false;
+                return true;
+            });
+            changed = true;
+        }
+    }
+    
+    // ========== 搜索结果页广告 ==========
+    else if (url.indexOf('/v4/search') >= 0) {
+        if (data.data && Array.isArray(data.data)) {
+            data.data = data.data.filter(function(item) {
+                if (!item || !item.data) return false;
+                // 移除广告条目
+                if (item.data.ad_info || item.data.is_ad || item.data.card_id === '1409') return false;
+                return true;
+            });
+            changed = true;
+        }
+    }
+    
+    // ========== 会员购/商业内容 ==========
+    else if (url.indexOf('/v4/topstory') >= 0 || url.indexOf('/v4/feed') >= 0) {
+        if (data.data && Array.isArray(data.data)) {
+            data.data = data.data.filter(function(item) {
+                if (!item || !item.data) return true;
+                // 移除会员购卡片、广告卡片
+                if (item.data.type === 'shopping_list' || item.data.type === 'shopping_entrance') return false;
+                if (item.data.ad_label) return false;
+                return true;
+            });
+            changed = true;
+        }
+    }
+    
+    if (changed) {
+        $response.body = JSON.stringify(data);
+    }
+    
+    $done({response: $response});
+})();

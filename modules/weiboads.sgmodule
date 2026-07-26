@@ -1,0 +1,56 @@
+# 微博去广告净化 - 从 anywhere fmz200/wool_scripts 提取
+# 覆盖：开屏/信息流/搜索/详情页/评论区/超话
+
+[URL Rewrite]
+# 广告域名直接 REJECT
+^https?://(?:biz|ad|alitui|tui|wax|widget|game|adimg\.weibo|zymo\.mps)\.weibo\.com(?:[:/?]|$) - reject
+^https?://(?:dp\.im|dsp\.edm|game|gw[56]\.push\.mcp|promote\.biz)\.weibo\.cn(?:[:/?]|$) - reject
+^https?://(?:bootpreload|fastimage|sdkapp|adimg|click|datacollection|wbapp)\.uve\.weibo\.com(?:[:/?]|$) - reject
+^https?://adpinpai\.video\.weibocdn\.com(?:[:/?]|$) - reject
+^https?://weibomingzi\.com(?:[:/?]|$) - reject
+
+# 广告API接口
+^https?://api\.weibo\.cn/2/(?:push/active|client/addlog_batch|ad/preload)(?:[/?#]|$) - reject
+^https?://api-cloudim\.api\.weibo\.com/v1/log/ - reject
+^https?://api\.weibo\.c(?:n|om)/\d/(?:cardlist\?v_f=\d|ad/weibointl\?) - reject
+^https?://weibointl\.api\.weibo\.c(?:n|om)/portal\.php\?a=(?:hot_search_users|get_searching_info|treehole&auth=) - reject
+^https?://m?api\.weibo\.c(?:n|om)/\d/push/daily - reject
+^https?://m?api\.weibo\.c(?:n|om)/2/!/huati/(?:discovery_home_bottom_getdotinfo|mobile_discovery_searchchange)\? - reject
+^https?://boot(?:realtime|preload)\.uve\.weibo\.com/v\d/ad/(?:realtime|preload) - reject
+^https?://sdkapp\.uve\.weibo\.com/interface/sdk/(?:get-lbs-cell-info\.php|sdkconfig\.php) - reject
+^https://card\.weibo\.com/article/m/aj/(?:reward|uvead)\? - reject
+^https://weibo\.com/ttarticle/x/m/aj/(?:reward|uvead)\? - reject
+^https?://m?api\.weibo\.c(?:n|om)/2/!/(?:huati/discovery_home_bottom_channels|chaohua/discovery/home_bottom/switch|was/finder/searchbarchange\?) - reject
+^https?://m?api\.weibo\.c(?:n|om)/2/(?:logservice/service|push/info)\? - reject
+^https?://m?api\.weibo\.c(?:n|om)/2/client/addlog_batch - reject
+
+[Script]
+# 微博信息流净化（去除广告卡片）
+weibo-timeline = type=http-response,pattern=^https://api\.weibo\.cn/2/statuses/(?:unread_)?friends(?:_|/)?timeline(?:\?|$),script-path=scripts/weibo-ad.js,requires-body=1,max-size=2097152,timeout=10
+
+# 微博用户时间线净化
+weibo-userline = type=http-response,pattern=^https://api\.weibo\.cn/2/statuses/user_timeline(?:\?|$),script-path=scripts/weibo-ad.js,requires-body=1,max-size=2097152,timeout=10
+
+# 微博卡片列表净化
+weibo-cardlist = type=http-response,pattern=^https://api\.weibo\.cn/2/cardlist(?:\?|$),script-path=scripts/weibo-ad.js,requires-body=1,max-size=2097152,timeout=10
+
+# 微博主页净化
+weibo-profile = type=http-response,pattern=^https://api\.weibo\.cn/2/profile/(?:me|container_timeline)(?:\?|$),script-path=scripts/weibo-ad.js,requires-body=1,max-size=2097152,timeout=10
+
+# 微博详情页净化（删除广告字段）
+weibo-detail = type=http-response,pattern=^https://api\.weibo\.cn/2/statuses/extend(?:\?|$),script-path=scripts/weibo-ad.js,requires-body=1,max-size=524288,timeout=10
+
+# 微博搜索净化（去除广告条目）
+weibo-search = type=http-response,pattern=^https://api\.weibo\.cn/2/search(?:all|finder)(?:\?|$),script-path=scripts/weibo-ad.js,requires-body=1,max-size=2097152,timeout=10
+
+# 微博超话时间线净化
+weibo-topic = type=http-response,pattern=^https://api\.weibo\.cn/2/page(?:\?|$),script-path=scripts/weibo-ad.js,requires-body=1,max-size=1048576,timeout=10
+
+# 微博推荐流净化
+weibo-flow = type=http-response,pattern=^https://api\.weibo\.cn/2/flowpage(?:\?|$),script-path=scripts/weibo-ad.js,requires-body=1,max-size=2097152,timeout=10
+
+# 微博主页Tab净化
+weibo-main = type=http-response,pattern=^https://api\.weibo\.cn/2/container/get_item(?:\?|$),script-path=scripts/weibo-ad.js,requires-body=1,max-size=1048576,timeout=10
+
+# 微博消息流净化
+weibo-message = type=http-response,pattern=^https://api\.weibo\.cn/2/messageflow(?:\?|$),script-path=scripts/weibo-ad.js,requires-body=1,max-size=1048576,timeout=10
