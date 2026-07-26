@@ -1,17 +1,12 @@
 #!name=YouTube 去广告
-#!desc=YouTube 广告拦截：开屏、信息流、暂停、贴片广告
+#!desc=YouTube 广告拦截：URL 拦截 + MITM 支持（脚本在主配置中）
 #!category=广告拦截
 #!icon=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/YouTube.png
 
 [URL Rewrite]
-^https?://(www|s)\\.youtube\\.com/api/stats/ads - reject-200
-^https?://(www|s)\\.youtube\\.com/(pagead|ptracking) - reject-200
-^https?://s\\.youtube\\.com/api/stats/qoe\\?adcontext - reject-200
-
-[Script]
-# YouTube 广告脚本
-youtube-ads = type=http-response,pattern=^https?://(www|s)\\\\.youtube\\\\.com/(pagead|ptracking),script-path=https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/scripts/youtube-ads.js
-youtube-stats = type=http-response,pattern=^https?://(www|s)\\\\.youtube\\\\.com/api/stats/ads,script-path=https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/scripts/youtube-ads.js
+^https?://(www|s)\.youtube\.com/api/stats/ads - reject-200
+^https?://(www|s)\.youtube\.com/(pagead|ptracking) - reject-200
+^https?://s\.youtube\.com/api/stats/qoe\?adcontext - reject-200
 
 [MITM]
 enable = true

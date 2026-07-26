@@ -1,6 +1,6 @@
 // amap-ad.js
 // 高德地图去广告增强版 - 从 anywhere RuCu6/kelv1n1n 提取
-// ES5 兼容 Shadowrocket QuanX
+// 兼容 Shadowrocket ES5
 
 (function() {
     'use strict';
@@ -8,94 +8,168 @@
     var url = $request.url;
     var method = $request.method;
     
-    // 仅处理响应
-    if (method && method !== 'response') {
-        $done({url: url});
+    if (!url) { $done({}); return; }
+    
+    // === 1. 请求阶段：阻止广告接口 ===
+    
+    // 开屏广告
+    if (url.indexOf('/ws/valueadded/alimama/splash_screen') !== -1) {
+        $done({ status: 200, body: '[]' });
         return;
     }
     
-    var body = $response.body;
-    if (!body || typeof body !== 'string') {
-        $done({response: $response});
+    // 阿里妈妈 adc
+    if (url.indexOf('amdc.m.taobao.com/amdc/mobileDispatch') !== -1) {
+        $done({ status: 200, body: '{}' });
         return;
     }
     
-    var data;
-    try {
-        data = JSON.parse(body);
-    } catch (e) {
-        $done({response: $response});
+    // 主页广告
+    if (url.indexOf('/ws/aos/main/page/product/list') !== -1) {
+        $done({ status: 200, body: '{"list":[]}' });
         return;
     }
     
-    // ========== 高德导航主页广告 ==========
-    // faas/amap-navigation/card-service-plan-home | main-page
-    if (url.indexOf('/faas/amap-navigation/') >= 0 && 
-        (url.indexOf('/card-service-plan-home') >= 0 || url.indexOf('/main-page') >= 0)) {
-        // 移除首页上车点弹窗广告
-        if (data.data && data.data.common_data && data.data.common_data.ads) {
-            if (Array.isArray(data.data.common_data.ads)) {
-                data.data.common_data.ads = [];
+    // 导航主页广告 assets
+    if (url.indexOf('/ws/faas/amap-navigation/main-page-assets') !== -1) {
+        $done({ status: 200, body: '[]' });
+        return;
+    }
+    
+    if (url.indexOf('/ws/faas/amap-navigation/main-page-location') !== -1) {
+        $done({ status: 200, body: '[]' });
+        return;
+    }
+    
+    // 打车广告
+    if (url.indexOf('king_toolbox_car_bubble') !== -1) {
+        $done({ status: 200, body: '{}' });
+        return;
+    }
+    
+    if (url.indexOf('feedback/get_card_questions') !== -1) {
+        $done({ status: 200, body: '{}' });
+        return;
+    }
+    
+    if (url.indexOf('feedback/viptips') !== -1) {
+        $done({ status: 200, body: '{}' });
+        return;
+    }
+    
+    // 搜索广告
+    if (url.indexOf('/ws/shield/search_business/process/orderList') !== -1) {
+        $done({ status: 200, body: '{"result":[]}' });
+        return;
+    }
+    
+    if (url.indexOf('/ws/shield/search/new_hotword') !== -1) {
+        $done({ status: 200, body: JSON.stringify({result:[],time:Date.now(),msg:"success"}) });
+        return;
+    }
+    
+    if (url.indexOf('/ws/shield/search_poi/tips_adv') !== -1) {
+        $done({ status: 200, body: '[]' });
+        return;
+    }
+    
+    // Banner 列表
+    if (url.indexOf('/ws/banner/lists/') !== -1) {
+        $done({ status: 200, body: '[]' });
+        return;
+    }
+    
+    // AI 推荐
+    if (url.indexOf('/v1/ai_rec/') !== -1) {
+        $done({ status: 200, body: '[]' });
+        return;
+    }
+    
+    // 消息通知
+    if (url.indexOf('/ws/message/notice/list') !== -1) {
+        $done({ status: 200, body: '[]' });
+        return;
+    }
+    
+    // 场景推荐
+    if (url.indexOf('/ws/shield/scene/recommend') !== -1) {
+        $done({ status: 200, body: '{"data":[]}' });
+        return;
+    }
+    
+    // 天气插件
+    if (url.indexOf('/ws/valueadded/weather/v2') !== -1) {
+        $done({ status: 200, body: '{}' });
+        return;
+    }
+    
+    // 消息盒子
+    if (url.indexOf('/ws/msgbox/pull_mp') !== -1) {
+        $done({ status: 200, body: '[]' });
+        return;
+    }
+    
+    // 错峰出行
+    if (url.indexOf('transportation/diversion/resource/driving') !== -1) {
+        $done({ status: 200, body: '{}' });
+        return;
+    }
+    
+    // 打车订单
+    if (url.indexOf('/ws/boss/car/order/content_info') !== -1) {
+        $done({ status: 304, headers: {} });
+        return;
+    }
+    
+    // 公共交通
+    if (url.indexOf('/ws/bus/plan/integrate') !== -1) {
+        $done({ status: 200, body: '{"data":[]}' });
+        return;
+    }
+    
+    // === 2. 响应阶段：清理 JSON 中的广告数据 ===
+    if (method === 'POST' || method === 'GET') {
+        if (!$response.body || typeof $response.body !== 'string') {
+            $done({});
+            return;
+        }
+        
+        var text = $response.body;
+        var parsed = null;
+        
+        try { parsed = JSON.parse(text); } catch(e) { $done({}); return; }
+        
+        var modified = false;
+        
+        // 清理搜索营销数据
+        if (url.indexOf('marketingOperationStructured') !== -1 && parsed.data) {
+            if (parsed.data.commonMaterial && parsed.data.commonMaterial.data) {
+                parsed.data.commonMaterial.data.bus_platoon_bottom_event = {};
+                modified = true;  
+            }
+            if (parsed.data.tipsOperationLocation) {
+                parsed.data.tipsOperationLocation = [];
+                modified = true;
+            }
+            if (parsed.data.resourcePlacement) {
+                parsed.data.resourcePlacement = [];
+                modified = true;
             }
         }
-        // 移除首页运营Banner
-        if (data.data && data.data.banners) {
-            data.data.banners = data.data.banners.filter(function(b) {
-                return !b || !b.banner_show_type || b.banner_show_type !== 'AD';
-            });
+        
+        // 清理打车气泡广告
+        if (url.indexOf('content_info') !== -1 && parsed.data && parsed.data.benefits) {
+            parsed.data.benefits = {};
+            modified = true;
         }
-        // 移除底部运营位
-        if (data.module_data && data.module_data.appMapBottom && data.module_data.appMapBottom.length) {
-            data.module_data.appMapBottom = data.module_data.appMapBottom.filter(function(item) {
-                return !item || !item.biz_id || item.biz_id !== 5001;
-            });
+        
+        if (modified) {
+            $done({ body: JSON.stringify(parsed) });
+        } else {
+            $done({});
         }
+        return;
     }
     
-    // ========== 高德导航路线广告 ==========
-    else if (url.indexOf('/perception/drive/') >= 0 && 
-             (url.indexOf('/routeInfo') >= 0 || url.indexOf('/routePlan') >= 0)) {
-        if (data.data) {
-            // 移除路线卡片广告
-            if (data.data.route_preference_list && Array.isArray(data.data.route_preference_list)) {
-                data.data.route_preference_list = data.data.route_preference_list.filter(function(item) {
-                    return !item || !item.ad_trace;
-                });
-            }
-        }
-    }
-    
-    // ========== 高德搜索POI广告 ==========
-    else if (url.indexOf('/shield/search_poi/') >= 0) {
-        if (data.data && Array.isArray(data.data)) {
-            // 过滤广告POI（type=14 或 is_ad=true）
-            data.data = data.data.filter(function(poi) {
-                if (!poi || !poi.type) return true;
-                if (poi.type === 14) return false; // 商业推广POI
-                if (poi.ad_info && poi.ad_info.is_ad === 1) return false;
-                return true;
-            });
-        }
-        // 移除历史记录广告
-        if (data.history_tags) {
-            data.history_tags = data.history_tags.filter(function(tag) {
-                return tag && !/ads|ad/i.test(tag);
-            });
-        }
-        // 清理搜索建议广告
-        if (data.suggestion && data.suggestion.sug && Array.isArray(data.suggestion.sug)) {
-            data.suggestion.sug = data.suggestion.sug.filter(function(s) {
-                return !s || !s.ad_trace || !s.is_ad;
-            });
-        }
-    }
-    
-    // ========== 高德搜索热词 ==========
-    else if (url.indexOf('search_new_hotword') >= 0 || url.indexOf('hotword') >= 0) {
-        if (data.data) {
-            data.data = {};
-        }
-    }
-    
-    $done({response: $response});
+    $done({});
 })();
