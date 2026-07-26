@@ -36,43 +36,43 @@
 
 [Script]
 # 高德导航主页广告清理
-amap-navigation = type=http-response,pattern=^https://m5\.amap\.com/ws/faas/amap-navigation/(?:card-service-plan-home|main-page)(?:/?|\?|$),script-path=scripts/amap-ad.js,requires-body=1,max-size=524288,timeout=10
+amap-navigation = type=http-response,pattern=^https://m5\.amap\.com/ws/faas/amap-navigation/(?:card-service-plan-home|main-page)(?:/?|\?|$),script-path=https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/scripts/amap-ad.js,requires-body=1,max-size=524288,timeout=10
 
 # 高德打车订单广告清理
-amap-car = type=http-response,pattern=^https://m5-zb\.amap\.com/ws/boss/car/order/content_info(?:\?|$),script-path=scripts/amap-ad.js,requires-body=1,max-size=131072,timeout=10
+amap-car = type=http-response,pattern=^https://m5-zb\.amap\.com/ws/boss/car/order/content_info(?:\?|$),script-path=https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/scripts/amap-ad.js,requires-body=1,max-size=131072,timeout=10
 
 # 高德搜索页广告清理
-amap-search = type=http-response,pattern=^https://m5\.amap\.com/ws/shield/search_bff/hotword(?:\?|$),script-path=scripts/amap-ad.js,requires-body=1,max-size=131072,timeout=10
+amap-search = type=http-response,pattern=^https://m5\.amap\.com/ws/shield/search_bff/hotword(?:\?|$),script-path=https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/scripts/amap-ad.js,requires-body=1,max-size=131072,timeout=10
 
 # 高德POI详情广告清理
-amap-poi = type=http-response,pattern=^https://m5\.amap\.com/ws/shield/search_poi/detail(?:\?|$),script-path=scripts/amap-ad.js,requires-body=1,max-size=524288,timeout=10
+amap-poi = type=http-response,pattern=^https://m5\.amap\.com/ws/shield/search_poi/detail(?:\?|$),script-path=https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/scripts/amap-ad.js,requires-body=1,max-size=524288,timeout=10
 
 # 高德搜索建议广告清理
-amap-sug = type=http-response,pattern=^https://m5\.amap\.com/ws/shield/search_poi/sug(?:\?|$),script-path=scripts/amap-ad.js,requires-body=1,max-size=131072,timeout=10
+amap-sug = type=http-response,pattern=^https://m5\.amap\.com/ws/shield/search_poi/sug(?:\?|$),script-path=https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/scripts/amap-ad.js,requires-body=1,max-size=131072,timeout=10
 
 # 高德搜索附近广告清理
-amap-nearby = type=http-response,pattern=^https://m5\.amap\.com/ws/shield/search/nearbyrec_smart(?:\?|$),script-path=scripts/amap-ad.js,requires-body=1,max-size=131072,timeout=10
+amap-nearby = type=http-response,pattern=^https://m5\.amap\.com/ws/shield/search/nearbyrec_smart(?:\?|$),script-path=https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/scripts/amap-ad.js,requires-body=1,max-size=131072,timeout=10
 
 # 高德导航路线广告清理
-amap-route = type=http-response,pattern=^https://m5\.amap\.com/ws/perception/drive/(?:routeInfo|routePlan)(?:/?|\?|$),script-path=scripts/amap-ad.js,requires-body=1,max-size=131072,timeout=10
+amap-route = type=http-response,pattern=^https://m5\.amap\.com/ws/perception/drive/(?:routeInfo|routePlan)(?:/?|\?|$),script-path=https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/scripts/amap-ad.js,requires-body=1,max-size=131072,timeout=10
 
 # 高德公交规划广告清理
-amap-bus = type=http-response,pattern=^https://m5\.amap\.com/ws/bus/plan/integrate(?:\?|$),script-path=scripts/amap-ad.js,requires-body=1,max-size=131072,timeout=10
+amap-bus = type=http-response,pattern=^https://m5\.amap\.com/ws/bus/plan/integrate(?:\?|$),script-path=https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/scripts/amap-ad.js,requires-body=1,max-size=131072,timeout=10
 
 # 高德酒店搜索广告清理
-amap-hotel = type=http-response,pattern=^https://m5\.amap\.com/ws/c3frontend/af-hotel/page/main(?:\?|$),script-path=scripts/amap-ad.js,requires-body=1,max-size=524288,timeout=10
+amap-hotel = type=http-response,pattern=^https://m5\.amap\.com/ws/c3frontend/af-hotel/page/main(?:\?|$),script-path=https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/scripts/amap-ad.js,requires-body=1,max-size=524288,timeout=10
 
 # 高德附近推荐广告清理
-amap-nearbyrec = type=http-response,pattern=^https://m5\.amap\.com/ws/c3frontend/af-nearby/nearby(?:\?|$),script-path=scripts/amap-ad.js,requires-body=1,max-size=131072,timeout=10
+amap-nearbyrec = type=http-response,pattern=^https://m5\.amap\.com/ws/c3frontend/af-nearby/nearby(?:\?|$),script-path=https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/scripts/amap-ad.js,requires-body=1,max-size=131072,timeout=10
 
 # 高德首页运营广告清理
-amap-home = type=http-response,pattern=^https://m5\.amap\.com/ws/c3frontend/af-launch/page/main(?:\?|$),script-path=scripts/amap-ad.js,requires-body=1,max-size=131072,timeout=10
+amap-home = type=http-response,pattern=^https://m5\.amap\.com/ws/c3frontend/af-launch/page/main(?:\?|$),script-path=https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/scripts/amap-ad.js,requires-body=1,max-size=131072,timeout=10
 
 # 高德运营活动广告清理
-amap-promo = type=http-response,pattern=^https://m5\.amap\.com/ws/promotion-web/resource(?:/home)?(?:\?|$),script-path=scripts/amap-ad.js,requires-body=1,max-size=131072,timeout=10
+amap-promo = type=http-response,pattern=^https://m5\.amap\.com/ws/promotion-web/resource(?:/home)?(?:\?|$),script-path=https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/scripts/amap-ad.js,requires-body=1,max-size=131072,timeout=10
 
 # 高德DSP广告清理
-amap-dsp = type=http-response,pattern=^https://m5\.amap\.com/ws/shield/dsp/profile/index/nodefaasv3(?:\?|$),script-path=scripts/amap-ad.js,requires-body=1,max-size=131072,timeout=10
+amap-dsp = type=http-response,pattern=^https://m5\.amap\.com/ws/shield/dsp/profile/index/nodefaasv3(?:\?|$),script-path=https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/scripts/amap-ad.js,requires-body=1,max-size=131072,timeout=10
 
 # 高德FrogServer广告清理
-amap-frog = type=http-response,pattern=^https://m5\.amap\.com/ws/shield/frogserver/aocs/updatable/1(?:\?|$),script-path=scripts/amap-ad.js,requires-body=1,max-size=524288,timeout=10
+amap-frog = type=http-response,pattern=^https://m5\.amap\.com/ws/shield/frogserver/aocs/updatable/1(?:\?|$),script-path=https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/scripts/amap-ad.js,requires-body=1,max-size=524288,timeout=10

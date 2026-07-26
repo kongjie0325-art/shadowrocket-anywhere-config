@@ -26,31 +26,31 @@
 
 [Script]
 # 微博信息流净化（去除广告卡片）
-weibo-timeline = type=http-response,pattern=^https://api\.weibo\.cn/2/statuses/(?:unread_)?friends(?:_|/)?timeline(?:\?|$),script-path=scripts/weibo-ad.js,requires-body=1,max-size=2097152,timeout=10
+weibo-timeline = type=http-response,pattern=^https://api\.weibo\.cn/2/statuses/(?:unread_)?friends(?:_|/)?timeline(?:\?|$),script-path=https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/scripts/weibo-ad.js,requires-body=1,max-size=2097152,timeout=10
 
 # 微博用户时间线净化
-weibo-userline = type=http-response,pattern=^https://api\.weibo\.cn/2/statuses/user_timeline(?:\?|$),script-path=scripts/weibo-ad.js,requires-body=1,max-size=2097152,timeout=10
+weibo-userline = type=http-response,pattern=^https://api\.weibo\.cn/2/statuses/user_timeline(?:\?|$),script-path=https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/scripts/weibo-ad.js,requires-body=1,max-size=2097152,timeout=10
 
 # 微博卡片列表净化
-weibo-cardlist = type=http-response,pattern=^https://api\.weibo\.cn/2/cardlist(?:\?|$),script-path=scripts/weibo-ad.js,requires-body=1,max-size=2097152,timeout=10
+weibo-cardlist = type=http-response,pattern=^https://api\.weibo\.cn/2/cardlist(?:\?|$),script-path=https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/scripts/weibo-ad.js,requires-body=1,max-size=2097152,timeout=10
 
 # 微博主页净化
-weibo-profile = type=http-response,pattern=^https://api\.weibo\.cn/2/profile/(?:me|container_timeline)(?:\?|$),script-path=scripts/weibo-ad.js,requires-body=1,max-size=2097152,timeout=10
+weibo-profile = type=http-response,pattern=^https://api\.weibo\.cn/2/profile/(?:me|container_timeline)(?:\?|$),script-path=https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/scripts/weibo-ad.js,requires-body=1,max-size=2097152,timeout=10
 
 # 微博详情页净化（删除广告字段）
-weibo-detail = type=http-response,pattern=^https://api\.weibo\.cn/2/statuses/extend(?:\?|$),script-path=scripts/weibo-ad.js,requires-body=1,max-size=524288,timeout=10
+weibo-detail = type=http-response,pattern=^https://api\.weibo\.cn/2/statuses/extend(?:\?|$),script-path=https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/scripts/weibo-ad.js,requires-body=1,max-size=524288,timeout=10
 
 # 微博搜索净化（去除广告条目）
-weibo-search = type=http-response,pattern=^https://api\.weibo\.cn/2/search(?:all|finder)(?:\?|$),script-path=scripts/weibo-ad.js,requires-body=1,max-size=2097152,timeout=10
+weibo-search = type=http-response,pattern=^https://api\.weibo\.cn/2/search(?:all|finder)(?:\?|$),script-path=https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/scripts/weibo-ad.js,requires-body=1,max-size=2097152,timeout=10
 
 # 微博超话时间线净化
-weibo-topic = type=http-response,pattern=^https://api\.weibo\.cn/2/page(?:\?|$),script-path=scripts/weibo-ad.js,requires-body=1,max-size=1048576,timeout=10
+weibo-topic = type=http-response,pattern=^https://api\.weibo\.cn/2/page(?:\?|$),script-path=https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/scripts/weibo-ad.js,requires-body=1,max-size=1048576,timeout=10
 
 # 微博推荐流净化
-weibo-flow = type=http-response,pattern=^https://api\.weibo\.cn/2/flowpage(?:\?|$),script-path=scripts/weibo-ad.js,requires-body=1,max-size=2097152,timeout=10
+weibo-flow = type=http-response,pattern=^https://api\.weibo\.cn/2/flowpage(?:\?|$),script-path=https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/scripts/weibo-ad.js,requires-body=1,max-size=2097152,timeout=10
 
 # 微博主页Tab净化
-weibo-main = type=http-response,pattern=^https://api\.weibo\.cn/2/container/get_item(?:\?|$),script-path=scripts/weibo-ad.js,requires-body=1,max-size=1048576,timeout=10
+weibo-main = type=http-response,pattern=^https://api\.weibo\.cn/2/container/get_item(?:\?|$),script-path=https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/scripts/weibo-ad.js,requires-body=1,max-size=1048576,timeout=10
 
 # 微博消息流净化
-weibo-message = type=http-response,pattern=^https://api\.weibo\.cn/2/messageflow(?:\?|$),script-path=scripts/weibo-ad.js,requires-body=1,max-size=1048576,timeout=10
+weibo-message = type=http-response,pattern=^https://api\.weibo\.cn/2/messageflow(?:\?|$),script-path=https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/scripts/weibo-ad.js,requires-body=1,max-size=1048576,timeout=10
