@@ -1,0 +1,11 @@
+#!url=https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/modules/telegram-web.sgmodule
+#!name=Telegram Web 优化
+#!desc=Telegram Web 广告/推荐过滤（需要开启对应 MITM）
+#!category=功能模块
+#!icon=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram.png
+
+[Script]
+telegram-web = type=http-response,pattern=^https?://web\.telegram\.org,script-path=https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/scripts/telegram-web.js,requires-body=1,max-size=1048576,timeout=10
+
+[MITM]
+hostname = %APPEND% web.telegram.org

@@ -7,22 +7,20 @@
 ```
 full-config.ini          # 主配置：通用Proxy/规则/DNS，无硬编码节点
                              移除得局部脚本和 MITM 细节，交由独立模块处理。
+rules/
+  ├── upstream.list       # 远程 Rule Set 引用（LOYAL/TikTok/Google/AI/Apple/Microsoft）
 modules/
   ├── youtubeads.sgmodule     # YouTube 广告（URL Rewrite + 独立脚本 + MITM）
   ├── tiktok-unlock.sgmodule  # TikTok 区域解锁 + 广告过滤
   ├── bilibiliads.sgmodule    # Bilibili 去广告
   ├── weiboads.sgmodule       # 微博去广告
   ├── amapads.sgmodule        # 高德地图去广告
-                             开启/关闭模块 = 同时启停脚本+MITM+规则，不依赖主配置修改。
 scripts/
   ├── youtube-ads.js
   ├── tiktok-ad.js
   ├── bilibili-ad.js
   ├── weibo-ad.js
   ├── amap-ad.js
-rules/
-  ├── upstream/               # 对标 anywhere-rules 规则集（精确域名，无 Keyword）
-  └── adblock.ini             # 远程 RULE-SET 引用
 ```
 
 ## Anywhere 风格核心原则
@@ -33,6 +31,7 @@ rules/
 4. **不硬编码私钥** - `ca-p12`/`ca-passphrase` 已移除，由 Shadowrocket 本地生成
 5. **避免通配脚本** - 不用 `pattern=^https?://` 全局 Hook，仅对白名单域名启用
 6. **不 MITM 播放域名** - 为保护 YouTube/Spotify 播放稳定性，不把它们加入 MITM 列表
+7. **优先 RULE-SET** - 用远程规则集替代手工域名列表，降低维护成本
 
 ## 安全说明
 
