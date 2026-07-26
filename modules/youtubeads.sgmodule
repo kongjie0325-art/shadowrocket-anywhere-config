@@ -10,8 +10,8 @@
 
 [Script]
 # YouTube 广告脚本
-youtube-ads = type=http-response,pattern=^https?://(www|s)\\.youtube\\.com/(pagead|ptracking),script-path=
-youtube-stats = type=http-response,pattern=^https?://(www|s)\\.youtube\\.com/api/stats/ads,script-path=
+youtube-ads = type=http-response,pattern=^https?://(www|s)\\\\.youtube\\\\.com/(pagead|ptracking),script-path=https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/scripts/youtube-ads.js
+youtube-stats = type=http-response,pattern=^https?://(www|s)\\\\.youtube\\\\.com/api/stats/ads,script-path=https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/scripts/youtube-ads.js
 
 [MITM]
 enable = true
