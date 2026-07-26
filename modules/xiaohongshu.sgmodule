@@ -1,0 +1,16 @@
+#!url=https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/modules/xiaohongshu.sgmodule
+#!name=小红书去广告去水印
+#!desc=小红书广告与开屏水印过滤（需开启 mitm-enable）
+#!category=广告拦截
+#!icon=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/RedNote.png
+
+[URL Rewrite]
+^https://edith\.xiaohongshu\.com/api/sns/v1/surprisebox/(?:get_style|open|submit_action)(?:\?|$) - reject-200
+^https://www\.xiaohongshu\.com/api/marketing/box/trigger(?:\?|$) - reject-200
+^https://edith\.xiaohongshu\.com/api/sns/v\d+/note/(?:guide|detailfeed/preload)(?:\?|$) - reject-200
+^https://edith\.xiaohongshu\.com/api/sns/v\d+/guide/user_banner(?:\?|$) - reject-200
+^https://www\.xiaohongshu\.com/api/sns/(?:v\d+/ads/resource|v\d+/hey/\w+/hey_gallery)(?:\?|$) - reject-200
+^https://ci\.xiaohongshu\.com/system_config/watermark(?:\?|$) - reject-200
+
+[MITM]
+hostname = %APPEND% edith.xiaohongshu.com, www.xiaohongshu.com, ci.xiaohongshu.com, rec.xiaohongshu.com, so.xiaohongshu.com

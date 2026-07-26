@@ -1,0 +1,8 @@
+# Pixiv 去广告 - Anywhere MITM RuleSet
+# 上游: chaoscard/proxyrules。
+
+name = Pixiv去广告
+hostname = oauth.secure.pixiv.net
+
+1, 5, ^https://[^/]+/auth/token(?:\?|$), replace, $.response.user.is_premium, true
+1, 5, ^https://[^/]+/auth/token(?:\?|$), replace, $.user.is_premium, true

@@ -1,5 +1,6 @@
 # Bilibili 去广告规则 - 从 anywhere kokoryh/Sparkle 提取
 # 覆盖：开屏/信息流/搜索/直播间/我的页面/追番
+# 需要开启 mitm-enable.sgmodule
 
 [URL Rewrite]
 # 开屏广告（直接屏蔽API响应）
@@ -46,3 +47,6 @@ bilibili-comments = type=http-response,pattern=^https://[^/]+/x/v2/reply/main(?:
 
 # B站 收藏页清理
 bilibili-favorite = type=http-response,pattern=^https://[^/]+/x/v2/fav/topic/list(?:\?|$),script-path=https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/scripts/bilibili-ad.js,requires-body=1,max-size=131072,timeout=10
+
+[MITM]
+hostname = %APPEND% api.bilibili.com, app.bilibili.com

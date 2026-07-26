@@ -1,0 +1,8 @@
+#!url=https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/modules/spotify-unlock.sgmodule
+#!name=Spotify 解锁去广告
+#!desc=Spotify 区域解锁 + 广告过滤 + 会员绕过（需开启 mitm-enable）
+#!category=功能模块
+#!icon=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Spotify.png
+
+[MITM]
+hostname = %APPEND% spclient.wg.spotify.com, spclient.spotify.com, spotify.com

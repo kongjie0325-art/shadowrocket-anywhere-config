@@ -1,0 +1,12 @@
+#!url=https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/modules/smzdm.sgmodule
+#!name=什么值得买去广告
+#!desc=什么值得买广告/推荐净化（需开启 mitm-enable）
+#!category=广告拦截
+#!icon=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/SMZDM.png
+
+[URL Rewrite]
+^https?://www\.smzdm\.com/api/.*ad.*(?:\?|$) - reject-200
+^https?://home\.smzdm\.com/.*/feed.*(?:\?|$) - reject-200
+
+[MITM]
+hostname = %APPEND% www.smzdm.com, home.smzdm.com

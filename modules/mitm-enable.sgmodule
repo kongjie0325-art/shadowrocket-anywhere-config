@@ -1,0 +1,8 @@
+#!url=https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/modules/mitm-enable.sgmodule
+#!name=MITM 开关
+#!desc=开启 HTTPS 解密。开启后，依赖 MITM 的去广告模块才能生效。
+#!category=基础功能
+#!icon=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/SSL.png
+
+[MITM]
+enable = true

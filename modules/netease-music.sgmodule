@@ -1,0 +1,18 @@
+#!url=https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/modules/netease-music.sgmodule
+#!name=网易云音乐去广告
+#!desc=网易云音乐开屏/信息流/搜索广告过滤（需开启 mitm-enable）
+#!category=广告拦截
+#!icon=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/NetEase.png
+
+[URL Rewrite]
+^https?://httpdns\.music\.163\.com(?:[/:?]|$) - reject-200
+^https://[^/]+/x?e?api/ad(?:[/?].*|$) - reject-200
+^https://[^/]+/w?e?api/(?:side-bar/mini-program/music-service/account|delivery/(?:batch-deliver|deliver)|moment/tab/info/get|yunbei/account/entrance/get)(?:\?|$) - reject-200
+^https://[^/]+/x?eapi/(?:resource/comments?/musiciansaid|community/friends/fans-group/artist/group/get|user/sub/artist|music/songshare/text/recommend/get|mine/applet/redpoint|resniche/position/play/new/get)(?:\?|$) - reject-200
+^https://[^/]+/w?e?api/search/default(?:\?|$) - reject-200
+^https://[^/]+/w?e?api/(?:search/(?:chart|rcmd/keyword|specialkeyword)|resource-exposure/|activity/bonus/playpage/time/query)(?:\?|$) - reject-200
+^https://[^/]+/x?eapi/(?:mlivestream/entrance/playpage|link/(?:position/show/strategy|scene/show)|ios/version|v\d/content/exposure/comment/banner)(?:\?|$) - reject-200
+^https://[^/]+/store/x?e?api/(?:webconfig|entryconfig)(?:\?|$) - reject-200
+
+[MITM]
+hostname = %APPEND% music.163.com, ipv4.music.163.com, interface.music.163.com, interface1.music.163.com, interface2.music.163.com, interface3.music.163.com, interface4.music.163.com, interface5.music.163.com, interface6.music.163.com, interface7.music.163.com, interface8.music.163.com, interface9.music.163.com
