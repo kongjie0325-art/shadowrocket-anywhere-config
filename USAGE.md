@@ -68,8 +68,7 @@ TikTok 换区依赖 MITM 解密，需额外操作：
 ```ini
 [MITM]
 enable = true
-hostname = *.tiktokv.com, *.byteoversea.com, *.tik-tokapi.com, *.tiktok.com
-ca-passphrase = 88YHhW0Z
+hostname = api.bilibili.com, app.bilibili.com, www.zhihu.com, api.zhihu.com, api.weibo.cn, m5.amap.com, web.telegram.org, api.tiktokv.com, *.tiktokv.com, *.byteoversea.com, *.tik-tokapi.com, *.tiktok.com
 ```
 
 ### 步骤 2：生成并信任 CA 证书
