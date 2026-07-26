@@ -1,0 +1,11 @@
+#!url=https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/modules/youtube-script.sgmodule
+#!name=YouTube Script（实验）
+#!desc=YouTube 高级去广告 Script（2026 新版，实验性，可能间歇性失效）
+#!category=功能模块
+#!icon=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/YouTube.png
+
+[MITM]
+hostname = %APPEND% youtubei.googleapis.com, s.youtube.com
+
+# 当前实验版脚本：
+# youtube-ad-v2.js（2026年新版，仅处理 browse/next/player）

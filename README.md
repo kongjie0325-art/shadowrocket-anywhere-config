@@ -9,7 +9,9 @@ full-config.ini          # 主配置：仅 General / Proxy / Proxy Group / Rule 
                              不再硬编码业务脚本和 MITM 细节，全部由独立模块处理。
 modules/
   ├── mitm-enable.sgmodule     # MITM 开关（只负责开启 HTTPS 解密）
-  ├── youtubeads.sgmodule      # YouTube 广告（URL Rewrite + Script + MITM hostname）
+  ├── youtube-core.sgmodule    # YouTube 基础广告拦截（仅 Rewrite，稳定，永久开启）
+  ├── youtube-mitm.sgmodule    # YouTube HTTPS 解密（按需开启，范围最小）
+  ├── youtube-script.sgmodule  # YouTube 高级去广告（实验性，2026新版脚本）
   ├── tiktok-unlock.sgmodule   # TikTok 区域解锁 + 广告/直播屏蔽
   ├── bilibiliads.sgmodule     # Bilibili 去广告
   ├── weiboads.sgmodule        # 微博去广告
@@ -32,12 +34,26 @@ rules/
 
 模块内用 `%APPEND%` 追加 MITM hostname，互不覆盖。
 
+## YouTube 模块拆分（2026 增强版）
+
+YouTube 模块拆分为三层，独立开关，互不影响：
+
+| 模块 | 层级 | 作用 | 推荐状态 |
+|------|------|------|----------|
+| `youtube-core.sgmodule` | 稳定层 | 仅 Rewrite（pagead/ptracking/ads），不带 Script | 永久开启 |
+| `youtube-mitm.sgmodule` | 按需层 | MITM 仅解密 `youtubei.googleapis.com` + `s.youtube.com` | 需要 Script 时开启 |
+| `youtube-script.sgmodule` | 实验层 | 新版 Script（处理 browse/next/player） | 找到稳定脚本后开启 |
+
+**设计思路**：Rewrite 为主、Script 为辅。如果新版 Script 导致播放器异常，关闭 Script 模块即可恢复，不影响 Core 层广告拦截。
+
 ## 模块索引
 
 | 模块 | 导入链接 |
 |------|----------|
 | MITM 开关 | `https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/modules/mitm-enable.sgmodule` |
-| YouTube 去广告 | `https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/modules/youtubeads.sgmodule` |
+| YouTube Core（Rewrite） | `https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/modules/youtube-core.sgmodule` |
+| YouTube MITM | `https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/modules/youtube-mitm.sgmodule` |
+| YouTube Script（实验） | `https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/modules/youtube-script.sgmodule` |
 | TikTok 解锁+去广告 | `https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/modules/tiktok-unlock.sgmodule` |
 | Bilibili 去广告 | `https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/modules/bilibiliads.sgmodule` |
 | 微博去广告 | `https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/modules/weiboads.sgmodule` |
@@ -57,6 +73,7 @@ rules/
 4. **不硬编码私钥** — `ca-p12`/`ca-passphrase` 已移除，由 Shadowrocket 本地生成
 5. **避免通配脚本** — 仅对白名单域名启用 http-response 脚本
 6. **优先 RULE-SET** — 用 BlackMatrix7 远程规则集替代手工域名列表
+7. **Rewrite 优先** — YouTube 去广告优先用 URL Rewrite，Script 作为实验性补充
 
 ## 安全说明
 
@@ -67,5 +84,6 @@ rules/
 | 步骤 | 动作 | 期望 |
 |------|------|------|
 | 1 | 仅导入主配置 | YouTube 可打开 |
-| 2 | 开启 mitm-enable + youtubeads | YouTube 广告减少 |
-| 3 | 按需开启其他模块 | 对应 App 去广告生效 |
+| 2 | 开启 youtube-core | 广告统计被拦截，播放器正常 |
+| 3 | 开启 mitm-enable + youtube-mitm | HTTPS 解密启用 |
+| 4 | 开启 youtube-script（可选） | 广告进一步减少；如播放器异常则关闭此模块 |

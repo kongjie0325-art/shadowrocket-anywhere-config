@@ -1,0 +1,13 @@
+#!url=https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/modules/zhihuads.sgmodule
+#!name=知乎去广告
+#!desc=知乎开屏/信息流/搜索广告过滤（需开启 mitm-enable）
+#!category=广告拦截
+#!icon=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Zhihu.png
+
+[URL Rewrite]
+^https://www\.zhihu\.com/api/v4/splash/.* - reject-200
+^https://www\.zhihu\.com/api/v1/cards/frontend/.* - reject-200
+^https://[^/]+/api/v4/search/.*promotions.*(?:\?|$) - reject-200
+
+[MITM]
+hostname = %APPEND% www.zhihu.com, api.zhihu.com
