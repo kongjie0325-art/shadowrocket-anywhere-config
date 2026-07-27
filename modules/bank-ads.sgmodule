@@ -1,0 +1,8 @@
+#!url=https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/modules/bank-ads.sgmodule
+#!name=银行App去广告
+#!desc=招商/中信/中行/工商/建行/农行/浦发/民生/光大/平安/邮储等开屏广告过滤（需开启 mitm-enable）
+#!category=广告拦截
+#!icon=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Bank.png
+
+[MITM]
+hostname = %APPEND% static.95508.com, mps.95508.com, unionsr.chinalifeonline.com.cn, imcs.citicbank.com, wap.bank.ecitic.com, lban.spdb.com.cn, wap.spdb.com.cn, s3gw.cmbimg.com, webappcfg.paas.cmbchina.com, mbmodule-openapi.paas.cmbchina.com, image1.ccb.com, download1.bankcomm.com, mres.aibank.com, mobile.cebbank.com, v.icbc.com.cn, yghsh.cebbank.com, mbank.grcbank.com, cdn.jlbank.com.cn, mbank5.jsbchina.cn, midc.cdn-static.abchina.com.cn, enjoy.cdn-static.abchina.com, firefly.abchina.com.cn, cgbank.oss-cn-shenzhen.aliyuncs.com, images.cib.com.cn, file.cibfintech.com, static.psbc.com, mcc.psbc.com, mlife.jf365.boc.cn

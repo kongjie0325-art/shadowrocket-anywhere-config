@@ -1,0 +1,8 @@
+#!url=https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/modules/jd.sgmodule
+#!name=京东去广告/价格破解
+#!desc=京东开屏/推荐/价格显示优化（需开启 mitm-enable）
+#!category=广告拦截
+#!icon=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/JD.png
+
+[MITM]
+hostname = %APPEND% api.m.jd.com, litem.jd.com, m.jd.com, item.jd.com, edgelynx.jd.com, carius.jd.com, capenha.jd.com, carrotfish.jd.com, jddebug.jd.com, crmsg.jd.com, cainiao.jd.com, g.m.jd.com, pgdt.ugdtimg.com, img10.360buyimg.com, img11.360buyimg.com, img13.360buyimg.com, img14.360buyimg.com

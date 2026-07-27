@@ -1,0 +1,14 @@
+#!url=https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/modules/apple-wloc.sgmodule
+#!name=Apple 定位修改
+#!desc=修改 Apple 地图/天气定位到自定义位置（需开启 mitm-enable，保存 WLOC 坐标后生效）
+#!category=功能模块
+#!icon=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Location.png
+
+[MITM]
+hostname = %APPEND% gs-loc.apple.com, gs-loc-cn.apple.com
+
+# 使用方式：
+# 1. 安装并开启模块
+# 2. 打开 Apple 地图 App，搜索目标位置
+# 3. 长按地图保存 WLOC
+# 4. 此时所有 Apple 服务定位将修改到该坐标

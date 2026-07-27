@@ -1,0 +1,11 @@
+#!url=https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/modules/pixiv.sgmodule
+#!name=Pixiv 去广告
+#!desc=Pixiv 开屏/推荐广告过滤 + 会员解锁预览（需开启 mitm-enable）
+#!category=广告拦截
+#!icon=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Pixiv.png
+
+[URL Rewrite]
+^https://[^/]+/auth/token(?:\?|$) - reject-200
+
+[MITM]
+hostname = %APPEND% oauth.secure.pixiv.net, app-api.pixiv.net, www.pixiv.net
