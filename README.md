@@ -8,9 +8,10 @@
 full-config.ini          # 主配置：仅 General / Proxy / Proxy Group / Rule / MITM(默认关闭)
 modules/
   ├── mitm-enable.sgmodule       # MITM 开关
-  ├── youtube-ultimate.sgmodule  # YouTube 完整增强（一模块搞定，推荐）
-  ├── youtube-core.sgmodule      # YouTube 仅 Rewrite（最稳定，备用）
-  ├── youtube-script.sgmodule    # YouTube Enhance（Maasea，备用）
+  ├── youtube-ultimate.sgmodule  # YouTube 完整增强（推荐：Core Rewrite + Maasea Enhance + SponsorBlock）
+  ├── youtube-force-tcp.sgmodule # YouTube QUIC -> TCP 回退（按需开启）
+  ├── youtube-core.sgmodule      # YouTube 仅 Rewrite（最稳定，备用降级）
+  ├── youtube-script.sgmodule    # YouTube Enhance（Maasea，备用降级）
   ├── dual-subs.sgmodule         # YouTube 双字幕（DualSubs 官方架构）
   ├── sponsorblock.sgmodule      # SponsorBlock 跳过赞助
   ├── tiktok-unlock.sgmodule     # TikTok 解锁+去广告
@@ -34,20 +35,22 @@ modules/
 
 | 模块 | 作用 | 推荐状态 |
 |------|------|----------|
-| `youtube-ultimate.sgmodule` | **一模块搞定**：Core Rewrite + Maasea Enhance + 广告拦截 | ✅ **推荐** |
+| `youtube-ultimate.sgmodule` | **一模块搞定**：Core Rewrite + Maasea Enhance + SponsorBlock | ✅ **推荐** |
 | `mitm-enable.sgmodule` | 开启 HTTPS 解密 | 必须和 ultimate 一起开 |
+| `youtube-force-tcp.sgmodule` | QUIC 回退 TCP | 遇到卡顿时按需开 |
 | `dual-subs.sgmodule` | 双字幕增强 | 可选 |
 
 **如果 Ultimate 模块导致播放器异常**：
 - 降级为 `youtube-core.sgmodule`（仅 Rewrite，最稳定）
 - 或 `youtube-script.sgmodule`（仅 Maasea Enhance，不含额外 Rewrite）
 
-## 模块索引（共 22 个）
+## 模块索引（共 23 个）
 
 | 模块 | 导入链接 |
 |------|----------|
 | MITM 开关 | `https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/modules/mitm-enable.sgmodule` |
 | YouTube Ultimate（推荐） | `https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/modules/youtube-ultimate.sgmodule` |
+| YouTube Force TCP | `https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/modules/youtube-force-tcp.sgmodule` |
 | YouTube Core（备用） | `https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/modules/youtube-core.sgmodule` |
 | YouTube Script（备用） | `https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/modules/youtube-script.sgmodule` |
 | DualSubs | `https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/modules/dual-subs.sgmodule` |
@@ -85,8 +88,9 @@ modules/
 | 1 | 仅导入主配置 | YouTube/Google 可正常访问 |
 | 2 | 开启 youtube-core | 广告统计/pagead 被拦截 |
 | 3 | 开启 mitm-enable + youtube-ultimate | HTTPS 解密 + Enhance + 广告拦截 全部启用 |
-| 4 | 如果播放器异常 | 降级为 youtube-core + youtube-script（分开加载） |
-| 5 | 按需开启其他模块 | 对应 App 去广告生效 |
+| 4 | 遇到卡顿 | 开启 youtube-force-tcp |
+| 5 | 如果播放器异常 | 降级为 youtube-core + youtube-script（分开加载） |
+| 6 | 按需开启其他模块 | 对应 App 去广告生效 |
 
 ## 安全说明
 
