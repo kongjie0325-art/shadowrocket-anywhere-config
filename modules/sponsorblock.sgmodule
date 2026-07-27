@@ -1,0 +1,11 @@
+#!url=https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/modules/sponsorblock.sgmodule
+#!name=SponsorBlock
+#!desc=跳过 YouTube 视频片头/赞助/自我推广/Ending（基于 Maasea 架构，仅处理 player 接口）
+#!category=功能模块
+#!icon=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/SponsorBlock.png
+
+[MITM]
+hostname = %APPEND% youtubei.googleapis.com, *.googlevideo.com
+
+# SponsorBlock API：通过修改 player 响应注入跳过片段
+# 需要配合 SponsorBlock 公共服务 API（skipSegments）

@@ -12,6 +12,8 @@ modules/
   ├── youtube-core.sgmodule    # YouTube 基础广告拦截（仅 Rewrite，稳定，永久开启）
   ├── youtube-mitm.sgmodule    # YouTube MITM 最小 hostname（按需开启）
   ├── youtube-script.sgmodule  # YouTube 增强（基于 Maasea，含 request/response，实验性）
+  ├── sponsorblock.sgmodule    # 跳过视频片头/赞助/自我推广（可选）
+  ├── dual-subs.sgmodule       # 双字幕/翻译字幕增强（可选）
   ├── tiktok-unlock.sgmodule   # TikTok 区域解锁 + 广告/直播屏蔽
   ├── bilibiliads.sgmodule     # Bilibili 去广告
   ├── weiboads.sgmodule        # 微博去广告
@@ -43,10 +45,14 @@ rules/
 | `youtube-core.sgmodule` | 稳定层 | 仅 Rewrite（pagead/ptracking/ads/stats），不带 Script | 永久开启 |
 | `youtube-mitm.sgmodule` | 按需层 | MITM 精简为 `youtubei.googleapis.com` + `s.youtube.com` | 仅 Script 层需要时开启 |
 | `youtube-script.sgmodule` | 实验层 | 基于 Maasea 的 request/response 脚本 + `*.googlevideo.com` MITM | 稳定后推荐开启 |
+| `sponsorblock.sgmodule` | 可选 | 跳过视频片头/赞助/自我推广（基于 SponsorBlock API） | 按需开启 |
+| `dual-subs.sgmodule` | 可选 | 双字幕/翻译字幕增强（基于 Maasea 架构） | 按需开启 |
 
 **设计思路**：
 - Core 层负责最稳定的广告入口拦截；
 - Script 层只做兼容性增强和 UI 优化，不暴力删字段；
+- SponsorBlock 跳过视频内嵌片段（非官方广告）；
+- DualSubs 增强字幕体验；
 - 若新版 YouTube 更新导致 Script 异常，关闭 `youtube-script` 即可恢复播放，Core 层依然拦截 pagead/ptracking。
 
 ## 模块索引
@@ -57,6 +63,8 @@ rules/
 | YouTube Core（Rewrite） | `https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/modules/youtube-core.sgmodule` |
 | YouTube MITM | `https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/modules/youtube-mitm.sgmodule` |
 | YouTube Script（Maasea） | `https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/modules/youtube-script.sgmodule` |
+| SponsorBlock | `https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/modules/sponsorblock.sgmodule` |
+| DualSubs（双字幕） | `https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/modules/dual-subs.sgmodule` |
 | TikTok 解锁+去广告 | `https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/modules/tiktok-unlock.sgmodule` |
 | Bilibili 去广告 | `https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/modules/bilibiliads.sgmodule` |
 | 微博去广告 | `https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/modules/weiboads.sgmodule` |
@@ -90,4 +98,5 @@ rules/
 | 2 | 开启 youtube-core | 广告统计/pagead/ptracking 被拦截，播放器正常 |
 | 3 | 开启 mitm-enable + youtube-mitm | HTTPS 解密启用 |
 | 4 | 开启 youtube-script | UI 增强 + 部分广告过滤；如播放器异常则关闭此模块 |
-| 5 | 按需开启其他模块 | 对应 App 去广告生效 |
+| 5 | 开启 sponsorblock / dual-subs | 跳过赞助片段 / 双字幕生效 |
+| 6 | 按需开启其他模块 | 对应 App 去广告生效 |
