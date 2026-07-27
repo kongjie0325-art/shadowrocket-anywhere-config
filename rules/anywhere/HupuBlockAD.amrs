@@ -1,0 +1,14 @@
+# 虎扑去广告 - Anywhere MITM RuleSet
+# 上游: 奶思 / fmz200/wool_scripts。
+
+name = 虎扑去广告
+hostname = games.mobileapi.hupu.com, du.hupucdn.com, hoopchina.com.cn, goblin.hupu.com
+
+0, 0, ^https?://goblin\.hupu\.com(?:[/:?]|$), 2, {}
+0, 0, ^https?://games\.mobileapi\.hupu\.com/.+?/(?:interfaceAdMonitor|interfaceAd)/, 2, {}
+0, 0, ^https?://games\.mobileapi\.hupu\.com/.+?/status/init, 2, {}
+0, 0, ^https?://goblin\.hupu\.com/.+/interfaceAd/getOther, 2, {}
+0, 0, ^https?://games\.mobileapi\.hupu\.com/.+?/(?:search|interfaceAdMonitor|status|hupuBbsPm)/(?:hotkey|init|hupuBbsPm)\.?, 3
+0, 0, ^https?://du\.hupucdn\.com/\w+h\d{4}, 3
+0, 0, ^https?://i\d+\.hoopchina\.com\.cn/blogfile/\d+/\d+/BbsImg\.(?:big\.)?(?:png|jpg)$, 3
+0, 0, ^https?://i1\.hoopchina\.com\.cn/blogfile/.+_\d{3}x\d{4}, 3

@@ -1,8 +1,0 @@
-#!url=https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/modules/youtube-mitm.sgmodule
-#!name=YouTube MITM
-#!desc=YouTube HTTPS 解密（按需开启，范围最小化）
-#!category=功能模块
-#!icon=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/YouTube.png
-
-[MITM]
-hostname = %APPEND% youtubei.googleapis.com, s.youtube.com

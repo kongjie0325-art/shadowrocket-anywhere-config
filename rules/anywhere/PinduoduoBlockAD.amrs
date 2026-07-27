@@ -1,0 +1,9 @@
+# 拼多多去广告 - Anywhere MITM RuleSet
+# 上游: 奶思 / fmz200/wool_scripts。
+
+name = 拼多多去广告
+hostname = api.pinduoduo.com, api.yangkeduo.com, mobile.yangkeduo.com
+
+0, 0, ^https://[^/]+/api/cappuccino/splash(?:\?|$), 2, {}
+0, 0, ^https://[^/]+/api/aquarius/hungary/global/homepage(?:\?|$), 2, {}
+1, 5, ^https://[^/]+/proxy/api/api/express/post/waybill/red_packet/goods_list(?:\?|$), replace-recursive, list, []
