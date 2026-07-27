@@ -1,16 +1,17 @@
 #!url=https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/modules/youtube-core.sgmodule
 #!name=YouTube Core
-#!desc=YouTube 基础广告拦截（稳定层，仅 Rewrite，不带 Script）
+#!desc=YouTube 基础广告拦截（稳定层，仅 Rewrite，不带 Script/MITM）
 #!category=功能模块
 #!icon=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/YouTube.png
 
 [URL Rewrite]
-# 广告统计 & 追踪
-^https?://(www|s)\.youtube\.com/api/stats/ads - reject-200
-^https?://(www|s)\.youtube\.com/api/stats/qoe - reject-200
-^https?://(www|s)\.youtube\.com/pagead - reject-200
-^https?://(www|s)\.youtube\.com/ptracking - reject-200
-^https?://s\.youtube\.com/api/stats/ads(?:\?|$) - reject-200
-
-# 广告相关请求直接返回空，避免走网络
-^https?://(www|s)\.youtube\.com/youtubei/v1/ads - reject-200
+# 广告统计
+^https?:\/\/(www|s)\.youtube\.com\/api\/stats\/ads - reject-200
+# QoE
+^https?:\/\/(www|s)\.youtube\.com\/api\/stats\/qoe - reject-200
+# pagead
+^https?:\/\/(www|s)\.youtube\.com\/pagead - reject-200
+# tracking
+^https?:\/\/(www|s)\.youtube\.com\/ptracking - reject-200
+# youtubei ads
+^https?:\/\/(www|s)\.youtube\.com\/youtubei\/v1\/ads - reject-200

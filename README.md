@@ -7,36 +7,51 @@
 ```
 full-config.ini          # 主配置：仅 General / Proxy / Proxy Group / Rule / MITM(默认关闭)
 modules/
-  ├── mitm-enable.sgmodule     # MITM 开关
-  ├── YouTube (5 modules)       # YouTube 三层 + SponsorBlock + DualSubs
-  ├── TikTok.sgmodule
-  ├── Bilibili.sgmodule
-  ├── 广告拦截 (微博/知乎/小红书/高德/网易云/什么值得买/京东/Pixiv/喜马拉雅/银行)
-  ├── 功能模块 (Spotify/Telegram/Apple WLOC)
+  ├── mitm-enable.sgmodule       # MITM 开关
+  ├── youtube-ultimate.sgmodule  # YouTube 完整增强（一模块搞定，推荐）
+  ├── youtube-core.sgmodule      # YouTube 仅 Rewrite（最稳定，备用）
+  ├── youtube-script.sgmodule    # YouTube Enhance（Maasea，备用）
+  ├── dual-subs.sgmodule         # YouTube 双字幕（DualSubs 官方架构）
+  ├── sponsorblock.sgmodule      # SponsorBlock 跳过赞助
+  ├── tiktok-unlock.sgmodule     # TikTok 解锁+去广告
+  ├── bilibiliads.sgmodule       # Bilibili 去广告
+  ├── weiboads.sgmodule          # 微博去广告
+  ├── amapads.sgmodule           # 高德去广告
+  ├── xiaohongshu.sgmodule       # 小红书去广告去水印
+  ├── zhihuads.sgmodule          # 知乎去广告
+  ├── netease-music.sgmodule     # 网易云音乐去广告
+  ├── smzdm.sgmodule             # 什么值得买去广告
+  ├── jd.sgmodule                # 京东去广告/价格破解
+  ├── pixiv.sgmodule             # Pixiv 去广告
+  ├── ximalaya.sgmodule          # 喜马拉雅去广告
+  ├── bank-ads.sgmodule          # 银行App去广告
+  ├── spotify-unlock.sgmodule    # Spotify 解锁去广告
+  ├── telegram-web.sgmodule      # Telegram Web 优化
+  └── apple-wloc.sgmodule        # Apple 定位修改
 ```
 
-## YouTube 模块拆分（2026 增强版）
+## 推荐使用方式（YouTube）
 
-基于 Maasea `YouTube.Enhance.sgmodule` 改造为三层：
+| 模块 | 作用 | 推荐状态 |
+|------|------|----------|
+| `youtube-ultimate.sgmodule` | **一模块搞定**：Core Rewrite + Maasea Enhance + 广告拦截 | ✅ **推荐** |
+| `mitm-enable.sgmodule` | 开启 HTTPS 解密 | 必须和 ultimate 一起开 |
+| `dual-subs.sgmodule` | 双字幕增强 | 可选 |
 
-| 模块 | 层级 | 作用 | 推荐状态 |
-|------|------|------|----------|
-| `youtube-core.sgmodule` | 稳定层 | 仅 Rewrite（pagead/ptracking/ads/stats） | 永久开启 |
-| `youtube-mitm.sgmodule` | 按需层 | MITM 精简为 `youtubei.googleapis.com` + `s.youtube.com` | 仅 Script 需要时 |
-| `youtube-script.sgmodule` | 实验层 | Maasea request/response 脚本 | 稳定后推荐 |
-| `sponsorblock.sgmodule` | 可选 | 跳过视频片头/赞助/自我推广 | 按需开启 |
-| `dual-subs.sgmodule` | 可选 | 双字幕/翻译字幕 | 按需开启 |
+**如果 Ultimate 模块导致播放器异常**：
+- 降级为 `youtube-core.sgmodule`（仅 Rewrite，最稳定）
+- 或 `youtube-script.sgmodule`（仅 Maasea Enhance，不含额外 Rewrite）
 
-## 模块索引（共 21 个）
+## 模块索引（共 22 个）
 
 | 模块 | 导入链接 |
 |------|----------|
 | MITM 开关 | `https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/modules/mitm-enable.sgmodule` |
-| YouTube Core | `https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/modules/youtube-core.sgmodule` |
-| YouTube MITM | `https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/modules/youtube-mitm.sgmodule` |
-| YouTube Script | `https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/modules/youtube-script.sgmodule` |
-| SponsorBlock | `https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/modules/sponsorblock.sgmodule` |
+| YouTube Ultimate（推荐） | `https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/modules/youtube-ultimate.sgmodule` |
+| YouTube Core（备用） | `https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/modules/youtube-core.sgmodule` |
+| YouTube Script（备用） | `https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/modules/youtube-script.sgmodule` |
 | DualSubs | `https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/modules/dual-subs.sgmodule` |
+| SponsorBlock | `https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/modules/sponsorblock.sgmodule` |
 | TikTok 解锁+去广告 | `https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/modules/tiktok-unlock.sgmodule` |
 | Bilibili 去广告 | `https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/modules/bilibiliads.sgmodule` |
 | 微博去广告 | `https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/modules/weiboads.sgmodule` |
@@ -61,7 +76,7 @@ modules/
 4. **不硬编码私钥** — `ca-p12`/`ca-passphrase` 已移除
 5. **避免通配脚本** — 仅对白名单域名启用 http-response 脚本
 6. **优先 RULE-SET** — 用 BlackMatrix7 远程规则集替代手工域名列表
-7. **Rewrite 优先，Script 为辅** — YouTube 去广告优先用 URL Rewrite
+7. **YouTube 一模块搞定** — 用 Ultimate 模块组合多个功能，减少冲突
 
 ## 测试顺序
 
@@ -69,10 +84,9 @@ modules/
 |------|------|------|
 | 1 | 仅导入主配置 | YouTube/Google 可正常访问 |
 | 2 | 开启 youtube-core | 广告统计/pagead 被拦截 |
-| 3 | 开启 mitm-enable + youtube-mitm | HTTPS 解密启用 |
-| 4 | 开启 youtube-script | UI 增强 + 部分广告过滤 |
-| 5 | 开启 sponsorblock/dual-subs | 跳过赞助/双字幕 |
-| 6 | 按需开启广告拦截模块 | 对应 App 去广告生效 |
+| 3 | 开启 mitm-enable + youtube-ultimate | HTTPS 解密 + Enhance + 广告拦截 全部启用 |
+| 4 | 如果播放器异常 | 降级为 youtube-core + youtube-script（分开加载） |
+| 5 | 按需开启其他模块 | 对应 App 去广告生效 |
 
 ## 安全说明
 

@@ -1,11 +1,8 @@
 #!url=https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/modules/dual-subs.sgmodule
 #!name=DualSubs（双字幕）
-#!desc=YouTube 双字幕/翻译字幕增强（基于 Maasea 架构，仅增强字幕字段，不修改播放器）
+#!desc=YouTube 双语字幕增强（基于 DualSubs 官方架构，MITM 最小化，不含 *.youtube.com）
 #!category=功能模块
-#!icon=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Subtitle.png
+#!icon=https://raw.githubusercontent.com/DualSubs/YouTube/raw/main/src/assets/icon_rounded.png
 
 [MITM]
-hostname = %APPEND% youtubei.googleapis.com, *.googlevideo.com
-
-# 预留接口：后续补充 captionLang/lyricLang 脚本
-# 当前先不加入脚本，避免 2026 年接口变动导致不稳定
+hostname = %APPEND% *.googlevideo.com, youtubei.googleapis.com
