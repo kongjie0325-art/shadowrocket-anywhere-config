@@ -1,0 +1,70 @@
+Shadowrocket v10 审计报告
+==========================
+日期: 2026-08-14
+版本: full-config-prod-v10.ini
+
+【统计】
+策略组: 55
+规则条目: ~457
+DOMAIN-KEYWORD (核心配置): 0
+未定义 Rule Target: 0
+策略组循环依赖: 0
+同域名冲突规则: 0
+
+【五层架构】
+L1: Node Pools  → VMRACK/CLOUDNIUM/EUROPE/US/SG/HK POOL
+L2: Exit Policies → VMRACK/CLOUDNIUM/EUROPE/US/SG/HK EXIT
+L3: Application → AI/YOUTUBE/GOOGLE/STREAMING/SOCIAL/WORK/FINANCE/GAME/DOWNLOAD EXIT
+L4: General     → GENERAL-EXIT (VMRACK > EUROPE > US > SG > HK > DIRECT)
+
+【规则优先级】
+P0  LAN / Private (含 IPv6 私网)
+P1  DNS / 基础
+P2  AI
+P3  YouTube
+P4  Google
+P5  Streaming
+P6  Gaming
+P7  Social
+P8  Developer / Work
+P9  Microsoft
+P10 Apple (CN 优先)
+P11 Finance
+P12 Download
+P13 Bilibili (国内直连)
+P14 WeChat
+P15 Ad Block
+P16 China Direct (GEOIP CN)
+P17 GFW / ProxyGFW
+FINAL → GENERAL-EXIT
+
+【关键路由验证】
+youtube.com          → YOUTUBE-EXIT → YOUTUBE-CLOUDNIUM → CLOUDNIUM-CDN ✅
+googlevideo.com      → YOUTUBE-EXIT → YOUTUBE-CLOUDNIUM → CLOUDNIUM-CDN ✅
+youtubei.googleapis  → YOUTUBE-EXIT → YOUTUBE-CLOUDNIUM → CLOUDNIUM-CDN ✅
+api.openai.com       → AI-EXIT → AI-OPENAI → US-EXIT ✅
+gemini.google.com    → AI-EXIT ✅ (在 Google 之前)
+apple.com.cn         → DIRECT ✅ (AppleCN, 在 Apple 之前)
+bilibili.com         → DIRECT ✅ (P13, 在 GEOIP CN 之前)
+cloudflare-dns.com   → DIRECT ✅ (无冲突)
+WeChat               → DIRECT ✅ (独立 Rule Set)
+
+【已修复】
+1. YouTube → YOUTUBE-CLOUDNIUM → CLOUDNIUM-CDN 闭环
+2. GFW 最低优先级 (P17), 不再抢业务规则
+3. Bilibili 不进入 YouTube 区块
+4. 核心配置 DOMAIN-KEYWORD = 0
+5. WeChat 独立 Rule Set
+6. Cloudflare DNS 规则冲突消除
+7. Apple CN 优先于 AppleProxy/Apple
+8. 删除可疑域名 7h15.ru1353t.1s.m4d3.by.5ukk4w.skk.moe
+9. IPv6 私网规则补全
+10. force-http-engine-hosts 仅 YouTube (不含 QUIC/googlevideo)
+
+【MITM】
+enable = false (生产环境关闭)
+
+【DNS】
+dns-server = https://1.1.1.1/dns-query,https://dns.google/dns-query
+fallback-dns-server = system
+dns-direct-fallback-proxy = true
