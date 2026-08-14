@@ -49,4 +49,4 @@ bilibili-comments = type=http-response,pattern=^https://[^/]+/x/v2/reply/main(?:
 bilibili-favorite = type=http-response,pattern=^https://[^/]+/x/v2/fav/topic/list(?:\?|$),script-path=https://raw.githubusercontent.com/kongjie0325-art/shadowrocket-anywhere-config/master/scripts/bilibili-ad.js,requires-body=1,max-size=131072,timeout=10
 
 [MITM]
-hostname = %APPEND% api.bilibili.com, app.bilibili.com
+hostname = %APPEND% grpc.biliapi.net, api.bilibili.com, app.bilibili.com, api.live.bilibili.com, www.bilibili.com
